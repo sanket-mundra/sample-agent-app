@@ -1,0 +1,43 @@
+frontend/vite.config.js
+  d94fb499-5308-4507-bf78-66c3635ce51a 7
+---
+{
+  "attestations": [
+    {
+      "entries": [
+        {
+          "accepted_lines": 1,
+          "added_lines": 1,
+          "deleted_lines": 0,
+          "hash": "d94fb499-5308-4507-bf78-66c3635ce51a",
+          "lines": "7",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "frontend/vite.config.js"
+    }
+  ],
+  "base_commit_sha": "ed449eb7af49ea8f4c48b8eb542a40bfef1053f1",
+  "branch": "main",
+  "commit_sha": "a55640ab26dfc88de2e790a031962a2d31b356e8",
+  "commit_time": "2026-05-08T16:57:13+05:30",
+  "commit_type": "direct_commit",
+  "git_ai_version": "1.4.2",
+  "prompts": {
+    "d94fb499-5308-4507-bf78-66c3635ce51a": {
+      "accepted_lines": 1,
+      "agent_id": {
+        "id": "d94fb499-5308-4507-bf78-66c3635ce51a",
+        "model": "claude-opus-4-7",
+        "tool": "claude"
+      },
+      "human_author": "Sanket Mundra <sanket.mundra@harness.io>",
+      "messages": [],
+      "overriden_lines": 0,
+      "total_additions": 1,
+      "total_deletions": 0
+    }
+  },
+  "repo": "git@github.com:sanket-mundra/sample-agent-app.git",
+  "schema_version": "authorship/3.0.0"
+}
