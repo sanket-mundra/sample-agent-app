@@ -29,6 +29,7 @@ from .models import (
     MCPServerStatus,
     ToolCallRecord,
 )
+from .observability import trace_chat_turn
 
 logger = logging.getLogger(__name__)
 
@@ -79,16 +80,41 @@ class AgentService:
                 raise RuntimeError(
                     "LLM is not configured. Set a vendor/model/API key in Settings."
                 )
-            agent = AssistantAgent(
-                name=AGENT_NAME,
-                model_client=self._client,
-                workbench=self._workbenches if self._workbenches else None,
-                system_message=self._llm_config.system_prompt,
-                reflect_on_tool_use=True,
-            )
-            task = self._build_task(user_text, history or [])
-            result = await agent.run(task=task)
-            return self._build_response_message(result.messages)
+            mcp_names = [s.name for s in self._servers if s.enabled]
+            with trace_chat_turn(
+                user_text=user_text,
+                vendor=self._llm_config.vendor,
+                model=self._llm_config.model,
+                mcp_servers=mcp_names,
+            ) as turn:
+                try:
+                    agent = AssistantAgent(
+                        name=AGENT_NAME,
+                        model_client=self._client,
+                        workbench=self._workbenches if self._workbenches else None,
+                        system_message=self._llm_config.system_prompt,
+                        reflect_on_tool_use=True,
+                    )
+                    task = self._build_task(user_text, history or [])
+                    result = await agent.run(task=task)
+                    response = self._build_response_message(result.messages)
+                except Exception as e:
+                    turn.record_error(str(e))
+                    raise
+                turn.finish_llm(
+                    output=response.content,
+                    usage=self._extract_usage(result.messages),
+                )
+                for tc in response.tool_calls:
+                    turn.span_tool_call(
+                        server_name=tc.server_name,
+                        tool_name=tc.tool_name,
+                        arguments=tc.arguments,
+                        result=tc.result,
+                        error=tc.error,
+                    )
+                turn.finish_trace(output=response.content)
+                return response
 
     def _build_task(
         self, user_text: str, history: list[ChatMessage]
@@ -252,6 +278,32 @@ class AgentService:
         self._client = None
 
     # ---------- response shaping ----------
+
+    @staticmethod
+    def _extract_usage(messages: list[Any]) -> Optional[dict[str, int]]:
+        """Aggregate prompt/completion tokens from any message that carries models_usage."""
+        prompt = 0
+        completion = 0
+        seen = False
+        for m in messages:
+            usage = getattr(m, "models_usage", None)
+            if usage is None:
+                continue
+            pt = getattr(usage, "prompt_tokens", None)
+            ct = getattr(usage, "completion_tokens", None)
+            if pt is not None:
+                prompt += int(pt)
+                seen = True
+            if ct is not None:
+                completion += int(ct)
+                seen = True
+        if not seen:
+            return None
+        return {
+            "input": prompt,
+            "output": completion,
+            "total": prompt + completion,
+        }
 
     def _build_response_message(self, messages: list[Any]) -> ChatMessage:
         """Walk agent.run() output and collapse into a single assistant ChatMessage.

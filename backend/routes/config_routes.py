@@ -6,19 +6,26 @@ from ..agent import agent_service
 from ..config import (
     load_llm_config,
     load_mcp_servers,
+    load_observability_config,
     mask_llm_config,
     mask_mcp_servers,
+    mask_observability_config,
     merge_llm_update,
     merge_mcp_update,
+    merge_observability_update,
     save_llm_config,
     save_mcp_servers,
+    save_observability_config,
 )
 from ..models import (
     LLMConfig,
     LLMConfigResponse,
     MCPServerStatus,
     MCPServersPayload,
+    ObservabilityConfig,
+    ObservabilityConfigResponse,
 )
+from ..observability import tracer
 
 router = APIRouter(prefix="/api")
 
@@ -64,3 +71,30 @@ async def put_mcp_servers(payload: MCPServersPayload) -> list[dict]:
 @router.get("/mcp/status", response_model=list[MCPServerStatus])
 async def get_mcp_status() -> list[MCPServerStatus]:
     return agent_service.statuses
+
+
+@router.get("/config/observability", response_model=ObservabilityConfigResponse)
+async def get_observability_config() -> ObservabilityConfigResponse:
+    return mask_observability_config(load_observability_config())
+
+
+@router.put("/config/observability", response_model=ObservabilityConfigResponse)
+async def put_observability_config(
+    incoming: ObservabilityConfig,
+) -> ObservabilityConfigResponse:
+    existing = load_observability_config()
+    merged = merge_observability_update(existing, incoming)
+    save_observability_config(merged)
+    try:
+        tracer.configure(merged)
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(
+            status_code=400,
+            detail=f"Config saved, but tracer init failed: {e}",
+        )
+    return mask_observability_config(merged)
+
+
+@router.get("/observability/status")
+async def get_observability_status() -> dict:
+    return {"enabled": tracer.enabled, "host": tracer.host}

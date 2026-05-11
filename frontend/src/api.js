@@ -24,4 +24,7 @@ export const api = {
   sendMessage: (message) =>
     request("POST", "/api/chat/message", { message }),
   clearHistory: () => request("DELETE", "/api/chat/history"),
+  getObservability: () => request("GET", "/api/config/observability"),
+  putObservability: (cfg) => request("PUT", "/api/config/observability", cfg),
+  getObservabilityStatus: () => request("GET", "/api/observability/status"),
 };

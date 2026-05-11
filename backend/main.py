@@ -7,7 +7,12 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from .agent import agent_service
-from .config import load_llm_config, load_mcp_servers
+from .config import (
+    load_llm_config,
+    load_mcp_servers,
+    load_observability_config,
+)
+from .observability import tracer
 from .routes.chat_routes import router as chat_router
 from .routes.config_routes import router as config_router
 
@@ -21,6 +26,10 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
+        tracer.configure(load_observability_config())
+    except Exception:  # noqa: BLE001
+        logger.exception("Initial tracer configure failed; continuing anyway")
+    try:
         await agent_service.rebuild(load_llm_config(), load_mcp_servers())
     except Exception:  # noqa: BLE001
         logger.exception("Initial agent rebuild failed; continuing anyway")
@@ -28,6 +37,7 @@ async def lifespan(app: FastAPI):
         yield
     finally:
         await agent_service.shutdown()
+        tracer.shutdown()
 
 
 app = FastAPI(title="Sample Agent App", lifespan=lifespan)

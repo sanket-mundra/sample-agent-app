@@ -92,3 +92,17 @@ class SendMessageResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     error: str
+
+
+class ObservabilityConfig(BaseModel):
+    enabled: bool = False
+    host: str = "http://localhost:3000"
+    public_key: str = ""
+    secret_key: str = ""
+
+
+class ObservabilityConfigResponse(BaseModel):
+    enabled: bool
+    host: str
+    public_key: str
+    secret_key: str  # MASKED_SECRET if set, empty otherwise

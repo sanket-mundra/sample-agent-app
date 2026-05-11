@@ -123,6 +123,48 @@ success, or `disconnected` with the error text if the connection fails.
 | `POST` | `/api/chat/message` | Send a user message; returns the assistant response with any tool calls. |
 | `DELETE` | `/api/chat/history` | Clear chat history. |
 
+## Observability (Langfuse)
+
+A self-hosted Langfuse v3 stack ships via `docker-compose.yml`. Every chat
+turn becomes a Langfuse trace with a nested LLM generation and one child
+span per MCP tool call (server name, tool name, args, result/error).
+
+### Start Langfuse
+
+```bash
+docker compose up -d
+```
+
+Services:
+
+| Service | URL | Notes |
+|---|---|---|
+| Langfuse UI | http://localhost:3000 | dashboard + traces |
+| MinIO console | http://localhost:9091 | optional, S3 blob store |
+
+### Create a project and paste keys
+
+1. Open http://localhost:3000 and sign up (local instance, any email).
+2. A "Sample Agent App" project is pre-created. Open it.
+3. **Settings → API Keys → Create new API keys**. Copy the public key
+   (`pk-lf-…`) and secret key (`sk-lf-…`).
+4. In the app, open the **Observability** tab. Tick *Enabled*, leave host
+   as `http://localhost:3000`, paste both keys, and *Save*.
+5. Send a chat message. Refresh the Langfuse dashboard — the trace appears
+   under **Traces**.
+
+### What gets captured
+
+- One trace per chat turn, tagged with `vendor:…` and `model:…`.
+- LLM generation span with input, output, and token usage (when the model
+  returns it).
+- One child span per MCP tool call with server/tool name, arguments, and
+  result/error.
+- Trace metadata: enabled MCP server list.
+
+Use the Langfuse dashboard's built-in panels (Traces, Sessions, Usage,
+Costs, Latency) — no custom dashboard needed.
+
 ## Manual test checklist
 
 1. `GET /api/health` returns `{"ok": true}`.

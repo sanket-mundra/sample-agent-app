@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Chat from "./components/Chat.jsx";
 import LLMSettings from "./components/LLMSettings.jsx";
 import MCPSettings from "./components/MCPSettings.jsx";
+import Observability from "./components/Observability.jsx";
 
 const TABS = [
   { id: "chat", label: "Chat" },
   { id: "llm", label: "LLM Settings" },
   { id: "mcp", label: "MCP Servers" },
+  { id: "observability", label: "Observability" },
 ];
 
 export default function App() {
@@ -28,6 +30,7 @@ export default function App() {
       {tab === "chat" && <Chat />}
       {tab === "llm" && <LLMSettings />}
       {tab === "mcp" && <MCPSettings />}
+      {tab === "observability" && <Observability />}
     </div>
   );
 }

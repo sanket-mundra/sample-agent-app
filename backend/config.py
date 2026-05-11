@@ -12,12 +12,15 @@ from .models import (
     LLMConfig,
     LLMConfigResponse,
     MCPServerConfig,
+    ObservabilityConfig,
+    ObservabilityConfigResponse,
 )
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 LLM_PATH = DATA_DIR / "llm_config.json"
 MCP_PATH = DATA_DIR / "mcp_servers.json"
 HISTORY_PATH = DATA_DIR / "chat_history.json"
+OBS_PATH = DATA_DIR / "observability.json"
 
 
 def _atomic_write(path: Path, payload: Any) -> None:
@@ -167,3 +170,38 @@ def append_message(message: ChatMessage) -> list[ChatMessage]:
 
 def clear_history() -> None:
     save_history([])
+
+
+# ---------- Observability config ----------
+
+
+def load_observability_config() -> ObservabilityConfig:
+    data = _read_json(OBS_PATH)
+    if not data:
+        return ObservabilityConfig()
+    try:
+        return ObservabilityConfig.model_validate(data)
+    except Exception:
+        return ObservabilityConfig()
+
+
+def save_observability_config(cfg: ObservabilityConfig) -> None:
+    _atomic_write(OBS_PATH, cfg.model_dump())
+
+
+def mask_observability_config(cfg: ObservabilityConfig) -> ObservabilityConfigResponse:
+    return ObservabilityConfigResponse(
+        enabled=cfg.enabled,
+        host=cfg.host,
+        public_key=cfg.public_key,
+        secret_key=MASKED_SECRET if cfg.secret_key else "",
+    )
+
+
+def merge_observability_update(
+    existing: ObservabilityConfig, incoming: ObservabilityConfig
+) -> ObservabilityConfig:
+    data = incoming.model_dump()
+    if data.get("secret_key") in ("", MASKED_SECRET):
+        data["secret_key"] = existing.secret_key
+    return ObservabilityConfig.model_validate(data)
