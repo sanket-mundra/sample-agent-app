@@ -1,0 +1,224 @@
+backend/config.py
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 15-16,23,173-207
+docker-compose.yml
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 1-161
+backend/models.py
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 95-108
+backend/requirements.txt
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 6
+README.md
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 126-167
+backend/main.py
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 10-15,29-31,40
+  human 28
+frontend/src/components/Observability.jsx
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 1-130
+backend/observability.py
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 1-193
+backend/routes/config_routes.py
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 9,12,15,18,25-26,28,74-100
+backend/agent.py
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 32,83-117,282-307
+frontend/src/api.js
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 27-29
+frontend/src/App.jsx
+  43080912-d378-4d6f-b331-6b97e5e5fa7f 5,11,33
+---
+{
+  "attestations": [
+    {
+      "entries": [
+        {
+          "accepted_lines": 38,
+          "added_lines": 38,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "15-16,23,173-207",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/config.py"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 161,
+          "added_lines": 161,
+          "deleted_lines": 2,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "1-161",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "docker-compose.yml"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 14,
+          "added_lines": 14,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "95-108",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/models.py"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 1,
+          "added_lines": 1,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "6",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/requirements.txt"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 42,
+          "added_lines": 42,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "126-167",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "README.md"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 10,
+          "added_lines": 11,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "10-15,29-31,40",
+          "overridden_lines": 0
+        },
+        {
+          "accepted_lines": 1,
+          "added_lines": 1,
+          "deleted_lines": 0,
+          "hash": "human",
+          "lines": "28",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/main.py"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 130,
+          "added_lines": 130,
+          "deleted_lines": 2,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "1-130",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "frontend/src/components/Observability.jsx"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 193,
+          "added_lines": 193,
+          "deleted_lines": 3,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "1-193",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/observability.py"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 34,
+          "added_lines": 34,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "9,12,15,18,25-26,28,74-100",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/routes/config_routes.py"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 62,
+          "added_lines": 62,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "32,83-117,282-307",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "backend/agent.py"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 3,
+          "added_lines": 3,
+          "deleted_lines": 0,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "27-29",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "frontend/src/api.js"
+    },
+    {
+      "entries": [
+        {
+          "accepted_lines": 3,
+          "added_lines": 3,
+          "deleted_lines": 4,
+          "hash": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+          "lines": "5,11,33",
+          "overridden_lines": 0
+        }
+      ],
+      "file": "frontend/src/App.jsx"
+    }
+  ],
+  "base_commit_sha": "a55640ab26dfc88de2e790a031962a2d31b356e8",
+  "branch": "sanket/addLangfuseSupport",
+  "commit_sha": "8e78d3e29bf8308b043f3e9daab5456ef2db283f",
+  "commit_time": "2026-05-11T19:04:20+05:30",
+  "commit_type": "direct_commit",
+  "git_ai_version": "1.4.4",
+  "prompts": {
+    "43080912-d378-4d6f-b331-6b97e5e5fa7f": {
+      "accepted_lines": 691,
+      "agent_id": {
+        "id": "43080912-d378-4d6f-b331-6b97e5e5fa7f",
+        "model": "claude-opus-4-7",
+        "tool": "claude"
+      },
+      "human_author": "Sanket Mundra <sanket.mundra@harness.io>",
+      "overriden_lines": 0,
+      "total_additions": 692,
+      "total_deletions": 11
+    },
+    "human": {
+      "accepted_lines": 1,
+      "agent_id": null,
+      "human_author": "Sanket Mundra <sanket.mundra@harness.io>",
+      "overriden_lines": 0,
+      "total_additions": 1,
+      "total_deletions": 0
+    }
+  },
+  "repo": "git@github.com:sanket-mundra/sample-agent-app.git",
+  "schema_version": "authorship/3.0.0"
+}
