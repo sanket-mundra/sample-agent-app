@@ -158,3 +158,9 @@ success, or `disconnected` with the error text if the connection fails.
   finer-grained updates would be the natural next step.
 - **stdio environment isolation.** MCP stdio servers inherit the backend
   process's environment, plus any `env` entries you add.
+
+## Screenshots
+<img width="893" height="1058" alt="image" src="https://github.com/user-attachments/assets/d075fc53-7972-4e83-8051-5dadbe68f7b2" />
+<img width="879" height="671" alt="image" src="https://github.com/user-attachments/assets/6a7f3ec6-9ec2-4b0d-ad33-3e15b6552e75" />
+<img width="877" height="851" alt="image" src="https://github.com/user-attachments/assets/bb0a8758-2f19-4e22-9e5b-7dbdc3fcd563" />
+<img width="864" height="525" alt="image" src="https://github.com/user-attachments/assets/de404fb0-38aa-4e1f-a1c5-0727840188c1" />
